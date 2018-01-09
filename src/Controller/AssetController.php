@@ -18,26 +18,13 @@ class AssetController extends Controller
      */
     public function index()
     {
-         $em = $this->getDoctrine()->getManager();
-
-        $asset = new Asset();
-        $asset->setName('Bitcoin');
-        $asset->setMnemonic('BTC');
-       
-
-        // tell Doctrine you want to (eventually) save the Product (no queries yet)
-        $em->persist($asset);
-
-        // actually executes the queries (i.e. the INSERT query)
-        $em->flush();
-
-        return new Response('Saved new product with id '.$asset->getId());
-
+        return new Response('Saved new product with id ');
     }
+
+
 	/**
 	 * @Route("/asset/new/", name="asset_new")
 	 */
-	
 	public function new(Request $request)
     {
         // create a task and give it some dummy data for this example

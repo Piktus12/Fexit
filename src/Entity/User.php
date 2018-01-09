@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Symfony\Component\Validator\Constraints as Assert;
+
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
@@ -18,20 +20,62 @@ class User
     private $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ask", mappedBy="idUser")
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
      */
-    private $asks;
+    private $name;
 
-    public function __construct()
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    private $surname;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
     {
-        $this->asks = new ArrayCollection();
+        return $this->id;
     }
 
     /**
-     * @return Collection|Ask[]
+     * @param mixed $id
      */
-    public function getAsks()
+    public function setId($id)
     {
-        return $this->asks;
-    // add your own fields
+        $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+    /**
+     * @param mixed $surname
+     */
+    public function setSurname($surname)
+    {
+        $this->surname = $surname;
+    }
 }

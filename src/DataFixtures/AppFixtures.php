@@ -4,6 +4,9 @@
 namespace App\DataFixtures;
 
 use App\Entity\Asset;
+use App\Entity\User;
+use App\Entity\Bid;
+use App\Entity\Ask;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
@@ -90,7 +93,91 @@ class AppFixtures extends Fixture
 		$asset->setMnemonic('LSK');
         $asset->setVersus('BTC');
 		$manager->persist($asset);
-		
+
+		$user = new User();
+        $user->setName("Paul");
+        $user->setSurname("Jacquin");
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setName("Romain");
+        $user->setSurname("Lemoel");
+        $manager->persist($user);
+
+        $user = new User();
+        $user->setName("Bertrand");
+        $user->setSurname("Schvallinger");
+        $manager->persist($user);
+
+        $manager->flush();
+
+        $repository = $manager->getRepository(User::class);
+        $user1 = $repository->findOneBy(['name' => 'Paul']);
+        $user2 = $repository->findOneBy(['name' => 'Romain']);
+        $user3 = $repository->findOneBy(['name' => 'Bertrand']);
+        $repository = $manager->getRepository(Asset::class);
+        $asset = $repository->findOneBy(['name' => 'LiteCoin']);
+
+        for($i =0; $i< 20;$i++)
+        {
+            $bid = new Bid();
+            $bid->setIdUser($user1->getId());
+            $bid->setValue(mt_rand(10, 100));
+            $bid->setVolume(mt_rand(100, 600));
+            $bid->setAsset($asset->getId());
+            $date = new \DateTime('c');
+            $bid->setDate($date->setTimestamp($date->getTimestamp()-$i));
+            $manager->persist($bid);
+
+            $bid = new Bid();
+            $bid->setIdUser($user2->getId());
+            $bid->setValue(mt_rand(10, 100));
+            $bid->setVolume(mt_rand(100, 600));
+            $bid->setAsset($asset->getId());
+            $date = new \DateTime('c');
+            $bid->setDate($date->setTimestamp($date->getTimestamp()-$i));
+            $manager->persist($bid);
+
+            $bid = new Bid();
+            $bid->setIdUser($user3->getId());
+            $bid->setValue(mt_rand(10, 100));
+            $bid->setVolume(mt_rand(100, 600));
+            $bid->setAsset($asset->getId());
+            $date = new \DateTime('c');
+            $bid->setDate($date->setTimestamp($date->getTimestamp()-$i));
+            $manager->persist($bid);
+        }
+
+        for($i =0; $i< 20;$i++)
+        {
+            $ask = new Ask();
+            $ask->setIdUser($user1->getId());
+            $ask->setValue(mt_rand(10, 100));
+            $ask->setVolume(mt_rand(600, 1200));
+            $ask->setAsset($asset->getId());
+            $date = new \DateTime('c');
+            $ask->setDate($date->setTimestamp($date->getTimestamp()-$i));
+            $manager->persist($ask);
+
+            $ask = new Ask();
+            $ask->setIdUser($user2->getId());
+            $ask->setValue(mt_rand(10, 100));
+            $ask->setVolume(mt_rand(600, 1200));
+            $ask->setAsset($asset->getId());
+            $date = new \DateTime('c');
+            $ask->setDate($date->setTimestamp($date->getTimestamp()-$i));
+            $manager->persist($ask);
+
+            $ask = new Ask();
+            $ask->setIdUser($user3->getId());
+            $ask->setValue(mt_rand(10, 100));
+            $ask->setVolume(mt_rand(600, 1200));
+            $ask->setAsset($asset->getId());
+            $date = new \DateTime('c');
+            $ask->setDate($date->setTimestamp($date->getTimestamp()-$i));
+            $manager->persist($ask);
+        }
+
         $manager->flush();
     }
 }
