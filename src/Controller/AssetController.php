@@ -18,7 +18,14 @@ class AssetController extends Controller
      */
     public function index()
     {
-        return new Response('Saved new product with id ');
+
+        $assets = $this->getDoctrine()
+            ->getRepository(Asset::class)
+            ->findAll();
+
+        return $this->render('asset/index.html.twig', array(
+            'assets' => $assets,
+        ));
     }
 
 
@@ -75,13 +82,13 @@ class AssetController extends Controller
 
 	
 	/**
-	 * @Route("/asset/{id}", name="asset_show")
+	 * @Route("/asset/{name}", name="asset_show")
 	 */
-	public function showAction($id)
+	public function showAction($name)
 	{
 		$asset = $this->getDoctrine()
 			->getRepository(Asset::class)
-			->find($id);
+			->findOneBy(['name' => $name]);
 			
 		
 		if (!$asset) {

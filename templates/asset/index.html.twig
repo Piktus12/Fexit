@@ -1,0 +1,14 @@
+{# templates/default/new.html.twig #}
+{%  extends 'base.html.twig' %}
+
+{% block title %}List coins{% endblock %}
+
+{% block body %}
+
+    {% for asset in assets %}
+        <h2>{{ asset.name }}</h2>
+        <p>{{ asset.mnemonic }}</p>
+
+    {% endfor %}
+
+{% endblock %}
