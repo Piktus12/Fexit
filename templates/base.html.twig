@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Test Application{% endblock %}</title>
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+
 </head>
 <body>
 <div id="sidebar">
@@ -17,5 +20,7 @@
 <div id="content">
     {% block body %}{% endblock %}
 </div>
+<script src="{{ asset('build/app.js') }}"></script>
+
 </body>
 </html>

@@ -95,26 +95,41 @@ class AppFixtures extends Fixture
 		$manager->persist($asset);
 
 		$user = new User();
-        $user->setName("Paul");
-        $user->setSurname("Jacquin");
+        $user->setUsername("Izu_uzI");
+        $user->setFirstname("Paul");
+        $user->setLastname("Jacquin");
+        $user->setPassword("test");
+        $user->setEmail("pjacquin@gmail.com");
+        $user->setApiKey("test");
+        $user->setGoogleAuthenticatorCode("test");
         $manager->persist($user);
 
         $user = new User();
-        $user->setName("Romain");
-        $user->setSurname("Lemoel");
+        $user->setUsername("Kortex");
+        $user->setFirstname("Romain");
+        $user->setLastname("Lemoel");
+        $user->setEmail("rlemoel@gmail.com");
+        $user->setPassword("test2");
+        $user->setApiKey("test2");
+        $user->setGoogleAuthenticatorCode("test2");
         $manager->persist($user);
 
         $user = new User();
-        $user->setName("Bertrand");
-        $user->setSurname("Schvallinger");
+        $user->setUsername("Piktus");
+        $user->setFirstname("Bertrand");
+        $user->setLastname("Schvallinger");
+        $user->setEmail("bertrand.Schvallinger@gmail.com");
+        $user->setPassword("test3");
+        $user->setApiKey("test3");
+        $user->setGoogleAuthenticatorCode("test3");
         $manager->persist($user);
 
         $manager->flush();
 
         $repository = $manager->getRepository(User::class);
-        $user1 = $repository->findOneBy(['name' => 'Paul']);
-        $user2 = $repository->findOneBy(['name' => 'Romain']);
-        $user3 = $repository->findOneBy(['name' => 'Bertrand']);
+        $user1 = $repository->findOneBy(['username' => 'Izu_uzI']);
+        $user2 = $repository->findOneBy(['username' => 'Kortex']);
+        $user3 = $repository->findOneBy(['username' => 'Piktus']);
         $repository = $manager->getRepository(Asset::class);
         $asset = $repository->findOneBy(['name' => 'LiteCoin']);
 
