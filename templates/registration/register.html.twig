@@ -1,0 +1,16 @@
+{# templates/default/new.html.twig #}
+{%  extends 'base.html.twig' %}
+
+{% block title %}FeXiT{% endblock %}
+{% block body %}
+    {{ form_start(form) }}
+    {{ form_row(form.FirstName) }}
+    {{ form_row(form.LastName) }}
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.Password.first) }}
+    {{ form_row(form.Password.second) }}
+
+    <button type="submit">Register!</button>
+    {{ form_end(form) }}
+{% endblock %}
