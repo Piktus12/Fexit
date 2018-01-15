@@ -13,12 +13,15 @@
             # https://symfony.com/doc/current/security/form_login_setup.html
 security:
     # ...
+    encoders:
+        App\Entity\User:
+            algorithm: bcrypt
 
     providers:
         your_db_provider:
             entity:
                 class: App\Entity\User
-                property: apiKey
+                property: email
 
     firewalls:
         dev:
