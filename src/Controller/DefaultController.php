@@ -37,11 +37,15 @@ class DefaultController extends Controller
     /**
      * @Route("/verification/{key}", name="verification")
      */
-    public function verificationKey($key)
+    public function verificationKey(Request $request, $key)
     {
         // replace this line with your own code!
-        $session = new session();
-        $session->start();
+        $session = $request->getSession();
+        if($session == null)
+        {
+            $session = new session();
+            $session->start();
+        }
 
         $user = $this->getDoctrine()->getRepository(user::class)->findOneBy(['verification_key' => $key]);
         if($user != null)
@@ -51,16 +55,14 @@ class DefaultController extends Controller
             $em->persist($user);
             $em->flush();
 
-            $session->getFlashBag()->add('Notice',"Verification OK, Account enabled !");
+            $session->getFlashBag()->add('notice',"Verification OK, Account enabled !");
         }
         else
         {
-            $session->getFlashBag()->add('Notice',"Verification NOK, Invalid Verification link !");
+            $session->getFlashBag()->add('error ',"Verification NOK, Invalid Verification link !");
         }
 
 
-        $session = new session();
-        $session->start();
 
 
         return $this->render('index.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__), 'session' => $session ]);
