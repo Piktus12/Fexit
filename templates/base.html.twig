@@ -8,18 +8,26 @@
 
 </head>
 <body>
-<div id="sidebar">
-    {% block sidebar %}
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/blog">Blog</a></li>
-        </ul>
+<header>
+    {% block header %}
+
     {% endblock %}
-</div>
+    <nav>
+        {% block nav %}
+
+        {% endblock %}
+    </nav>
+</header>
 
 <div id="content">
     {% block body %}{% endblock %}
 </div>
+
+<footer>
+    {% block footer %}
+
+    {% endblock %}
+</footer>
 <script src="{{ asset('build/app.js') }}"></script>
 
 </body>

@@ -24,11 +24,6 @@ class User implements UserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $username;
-
-    /**
      * @ORM\Column(type="string")
      */
     private $firstname;
@@ -37,6 +32,67 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $lastname;
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $verification_key;
+
+    /**
+     * @return mixed
+     */
+    public function getValid()
+    {
+        return $this->valid;
+    }
+
+    /**
+     * @param mixed $valid
+     */
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
+    }
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+
+    /**
+     * @ORM\Column(type="string", unique=true)
+     */
+    private $email = null;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $googleAuthenticatorCode = null;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $valid = false;
+
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getVerificationKey()
+    {
+        return $this->verification_key;
+    }
+
+    /**
+     * @param mixed $verification_key
+     */
+    public function setVerificationKey($verification_key)
+    {
+        $this->verification_key = $verification_key;
+    }
 
     /**
      * @return mixed
@@ -60,6 +116,14 @@ class User implements UserInterface
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return null;
     }
 
     /**
@@ -103,25 +167,6 @@ class User implements UserInterface
         $this->googleAuthenticatorCode = $googleAuthenticatorCode;
     }
 
-    /**
-     * @ORM\Column(type="string")
-     */
-    private $password;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $apiKey;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $email = null;
-
-    /**
-     * @ORM\Column(type="string", unique=true)
-     */
-    private $googleAuthenticatorCode = null;
 
     /**
      * @return mixed
@@ -139,31 +184,6 @@ class User implements UserInterface
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getApiKey()
-    {
-        return $this->apiKey;
-    }
-
-    /**
-     * @param mixed $apiKey
-     */
-    public function setApiKey($apiKey): void
-    {
-        $this->apiKey = $apiKey;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
-
-    public function setUsername($username)
-    {
-        return $this->username = $username;
-    }
 
     public function getRoles()
     {
@@ -199,7 +219,6 @@ class User implements UserInterface
     {
         return serialize(array(
             $this->id,
-            $this->username,
             $this->password,
             // see section on salt below
             // $this->salt,
@@ -211,7 +230,6 @@ class User implements UserInterface
     {
         list (
             $this->id,
-            $this->username,
             $this->password,
             // see section on salt below
             // $this->salt

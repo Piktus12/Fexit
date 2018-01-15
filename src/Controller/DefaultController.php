@@ -18,7 +18,47 @@ class DefaultController extends Controller
      */
     public function index()
     {
+
+
+
+
         // replace this line with your own code!
+
+
+
+        $session = new session();
+        $session->start();
+
+
+        return $this->render('index.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__), 'session' => $session ]);
+    }
+
+
+    /**
+     * @Route("/verification/{key}", name="verification")
+     */
+    public function verificationKey($key)
+    {
+        // replace this line with your own code!
+        $session = new session();
+        $session->start();
+
+        $user = $this->getDoctrine()->getRepository(user::class)->findOneBy(['verification_key' => $key]);
+        if($user != null)
+        {
+            $em = $this->getDoctrine()->getManager();
+            $user->setValid(true);
+            $em->persist($user);
+            $em->flush();
+
+            $session->getFlashBag()->add('Notice',"Verification OK, Account enabled !");
+        }
+        else
+        {
+            $session->getFlashBag()->add('Notice',"Verification NOK, Invalid Verification link !");
+        }
+
+
         $session = new session();
         $session->start();
 
@@ -29,7 +69,7 @@ class DefaultController extends Controller
     /**
      * @Route("/signup", name="signup")
      */
-    public function signup(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function signup(Request $request, UserPasswordEncoderInterface $passwordEncoder,\Swift_Mailer $mailer)
     {
 
 
@@ -44,6 +84,14 @@ class DefaultController extends Controller
             $password = $passwordEncoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
 
+
+            //generate unique ID for API_Key
+
+            $key = md5(uniqid());
+            $user->setVerificationKey($key);
+            $user->setGoogleAuthenticatorCode('null');
+
+
             // 4) save the User!
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
@@ -51,6 +99,33 @@ class DefaultController extends Controller
 
             // ... do any other work - like sending them an email, etc
             // maybe set a "flash" success message for the user
+            $message = (new \Swift_Message('Hello Email'))
+                ->setFrom('registration@tsaf-paris.com')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                    // templates/emails/registration.html.twig
+                        'registration/email.html.twig',
+                        array('key' => $user->getVerificationKey())
+                    ),
+                    'text/html'
+                );
+
+            $mailLogger = new \Swift_Plugins_Loggers_ArrayLogger();
+
+
+            try {
+                $mailer->send($message);
+            }
+            catch (\Swift_TransportException $e) {
+                echo $e->getMessage();
+            }
+            $mailLogger->dump();
+
+
+
+
+
 
             return $this->redirectToRoute('default');
         }

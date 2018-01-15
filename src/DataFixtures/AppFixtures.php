@@ -95,41 +95,41 @@ class AppFixtures extends Fixture
 		$manager->persist($asset);
 
 		$user = new User();
-        $user->setUsername("Izu_uzI");
+        //$user->setUsername("Izu_uzI");
         $user->setFirstname("Paul");
         $user->setLastname("Jacquin");
         $user->setPassword("test");
         $user->setEmail("pjacquin@gmail.com");
-        $user->setApiKey("test");
+        $user->setVerificationKey("$2y$13$8AvtNWperVw2fdBtuuSy5eV.2j4IFO6q5vR4Q.bcn3fA6DcQYll");
         $user->setGoogleAuthenticatorCode("test");
         $manager->persist($user);
 
         $user = new User();
-        $user->setUsername("Kortex");
+        //$user->setUsername("Kortex");
         $user->setFirstname("Romain");
         $user->setLastname("Lemoel");
         $user->setEmail("rlemoel@gmail.com");
         $user->setPassword("test2");
-        $user->setApiKey("test2");
+        $user->setVerificationKey("$2y$13$8AvtNWperVw2fdBtuuSy5eV.2j4IFO6q5vR4Q.bcn3fA6DcQYll5");
         $user->setGoogleAuthenticatorCode("test2");
         $manager->persist($user);
 
         $user = new User();
-        $user->setUsername("Piktus");
+        //$user->setUsername("Piktus");
         $user->setFirstname("Bertrand");
         $user->setLastname("Schvallinger");
         $user->setEmail("bertrand.Schvallinger@gmail.com");
         $user->setPassword("test3");
-        $user->setApiKey("test3");
+        $user->setVerificationKey("$2y$13$8AvtNWperVw2fdBtuuSy5eV.2j4IFO6q5vR4Q.bcn3fA6DcQYll5q");
         $user->setGoogleAuthenticatorCode("test3");
         $manager->persist($user);
 
         $manager->flush();
 
         $repository = $manager->getRepository(User::class);
-        $user1 = $repository->findOneBy(['username' => 'Izu_uzI']);
-        $user2 = $repository->findOneBy(['username' => 'Kortex']);
-        $user3 = $repository->findOneBy(['username' => 'Piktus']);
+        $user1 = $repository->findOneBy(['email' => 'pjacquin@gmail.com']);
+        $user2 = $repository->findOneBy(['email' => 'rlemoel@gmail.com']);
+        $user3 = $repository->findOneBy(['email' => 'bertrand.Schvallinger@gmail.com']);
         $repository = $manager->getRepository(Asset::class);
         $asset = $repository->findOneBy(['name' => 'LiteCoin']);
 
