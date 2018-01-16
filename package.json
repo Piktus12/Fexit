@@ -17,6 +17,8 @@
     },
     "dependencies": {
         "angular": "^1.6.8",
-        "bootstrap-star-rating": "^4.0.2"
+        "bootstrap-star-rating": "^4.0.2",
+        "canvasjs": "^1.8.1",
+        "datatable": "^2.0.2"
     }
 }

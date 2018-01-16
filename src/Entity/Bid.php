@@ -40,7 +40,7 @@ class Bid
     /**
      * @ORM\Column(type="integer")
      */
-    private $asset;
+    private $market;
 
     /**
      * @return mixed
@@ -93,17 +93,17 @@ class Bid
     /**
      * @return mixed
      */
-    public function getAsset()
+    public function getMarket()
     {
-        return $this->asset;
+        return $this->market;
     }
 
     /**
-     * @param mixed $asset
+     * @param mixed $market
      */
-    public function setAsset($asset)
+    public function setMarket($market)
     {
-        $this->asset = $asset;
+        $this->market = $market;
     }
 
     /**

@@ -25,4 +25,15 @@ class AskRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findLowByForAsset($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.market = :value')->setParameter('value', $value)
+            ->orderBy('b.value', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()[0]
+            ;
+    }
 }

@@ -4,27 +4,35 @@
     <meta charset="UTF-8">
     <title>{% block title %}Test Application{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/global.css') }}">
+
 
 </head>
 <body>
-<header>
-    {% block header %}
-
-    {% endblock %}
-    <nav>
-        {% block nav %}
-
-                <ul>
-                    <li><a href="#">Accueil</a></li>
-                    <li><a href="{{ url('market') }}">Market</a></li>
-                    <li><a href="#">Login</a></li>
-                </ul>
-
-
+<div id="bloc_page">
+    <header>
+        {% block header %}
+            <div id="titre_principal">
+                <div id="logo">
+                    <h1>FeXiT</h1>
+                </div>
+                <h2>Coins Trading</h2>
+            </div>
         {% endblock %}
-    </nav>
-</header>
+        <nav>
+            {% block nav %}
+
+                    <ul>
+                        <li><a href="{{ url('default') }}">Home</a></li>
+                        <li><a href="{{ url('asset') }}">Coins</a></li>
+                        <li><a href="{{ url('market') }}">Market</a></li>
+                        <li><a href="#">Login</a></li>
+                    </ul>
+
+
+            {% endblock %}
+        </nav>
+    </header>
+</div>
 
 <div id="content">
     {% block body %}{% endblock %}

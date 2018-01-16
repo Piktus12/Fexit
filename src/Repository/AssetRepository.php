@@ -25,4 +25,12 @@ class AssetRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function findAllWithoutBTC()
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.mnemonic <> \'BTC\'')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 }

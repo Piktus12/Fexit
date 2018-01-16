@@ -25,4 +25,15 @@ class BidRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findHighByForAsset($value)
+    {
+        return $this->createQueryBuilder('b')
+            ->where('b.market = :value')->setParameter('value', $value)
+            ->orderBy('b.value', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()[0]
+            ;
+    }
 }

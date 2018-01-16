@@ -1,0 +1,62 @@
+{# templates/default/new.html.twig #}
+{%  extends 'base.html.twig' %}
+
+{% block title %}FeXiT{% endblock %}
+
+{% block body %}
+    <section id="graph">
+
+        <div id="chartContainer" style="height: 300px; width: 100%;">
+
+
+    </section>
+    <section id="bid">
+        <div><h1>Bid</h1></div>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th>Value</th>
+                <th>Volume</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+        {% for bid in bids %}
+            <tr>
+                <td>{{ bid.value }}</td>
+                <td>{{ bid.volume }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </section>
+    <section id="ask">
+        <div><h1>Ask</h1></div>
+        <table class="table  table-sm">
+            <thead>
+            <tr>
+                <th>Value</th>
+                <th>Volume</th>
+            </tr>
+            </thead>
+            <tbody>
+
+
+            {% for ask in asks %}
+                <tr>
+                    <td>{{ ask.value }}</td>
+                    <td>{{ ask.volume }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </section>
+
+    <script>
+        $(document).ready(function() {
+            function ajaxCall();
+        });
+
+    </script>
+
+
+{% endblock %}

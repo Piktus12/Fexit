@@ -4,6 +4,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Asset;
+use App\Entity\Market;
 use App\Entity\User;
 use App\Entity\Bid;
 use App\Entity\Ask;
@@ -77,7 +78,7 @@ class AppFixtures extends Fixture
 		$manager->persist($asset);
 		
 		$asset = new Asset();
-		$asset->setName('Bicoin Cash');
+		$asset->setName('Bitcoin Cash');
 		$asset->setMnemonic('BCC');
 		$asset->setVersus('BTC');
 		$manager->persist($asset);
@@ -94,7 +95,90 @@ class AppFixtures extends Fixture
         $asset->setVersus('BTC');
 		$manager->persist($asset);
 
-		$user = new User();
+        $manager->flush();
+
+
+		//MARKET
+        $repository = $manager->getRepository(Asset::class);
+        $asset = $repository->findOneBy(['name' => 'Lisk']);
+
+        $market = new Market();
+        $market->setName('LSK-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Zcash']);
+        $market = new Market();
+        $market->setName('ZEC-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Bitcoin Cash']);
+        $market = new Market();
+        $market->setName('BCC-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Omisego']);
+        $market = new Market();
+        $market->setName('OMG-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'DogeCoin']);
+        $market = new Market();
+        $market->setName('DOGE-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Siacoin']);
+        $market = new Market();
+        $market->setName('SC-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Ripple']);
+        $market = new Market();
+        $market->setName('XRP-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Lumen']);
+        $market = new Market();
+        $market->setName('XLM-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Stratis']);
+        $market = new Market();
+        $market->setName('STRAT-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Xverge']);
+        $market = new Market();
+        $market->setName('XVG-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Litecoin']);
+        $market = new Market();
+        $market->setName('LTC-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+        $asset = $repository->findOneBy(['name' => 'Ethereum']);
+        $market = new Market();
+        $market->setName('ETH-BTC');
+        $market->setIdAsset($asset->getId());
+        $manager->persist($market);
+
+
+
+
+
+
+        $user = new User();
         //$user->setUsername("Izu_uzI");
         $user->setFirstname("Paul");
         $user->setLastname("Jacquin");
@@ -130,67 +214,82 @@ class AppFixtures extends Fixture
         $user1 = $repository->findOneBy(['email' => 'pjacquin@gmail.com']);
         $user2 = $repository->findOneBy(['email' => 'rlemoel@gmail.com']);
         $user3 = $repository->findOneBy(['email' => 'bertrand.Schvallinger@gmail.com']);
-        $repository = $manager->getRepository(Asset::class);
-        $asset = $repository->findOneBy(['name' => 'LiteCoin']);
+        $repository = $manager->getRepository(Market::class);
+        $markets = $repository->findAll();
 
-        for($i =0; $i< 20;$i++)
-        {
-            $bid = new Bid();
-            $bid->setIdUser($user1->getId());
-            $bid->setValue(mt_rand(10, 100));
-            $bid->setVolume(mt_rand(100, 600));
-            $bid->setAsset($asset->getId());
-            $date = new \DateTime('c');
-            $bid->setDate($date->setTimestamp($date->getTimestamp()-$i));
-            $manager->persist($bid);
+        foreach($markets as $current ) {
+            for ($i = 0; $i < 20; $i++) {
+                $bid = new Bid();
+                $bid->setIdUser($user1->getId());
+                $bid->setValue(mt_rand(10, 100));
+                $bid->setVolume(mt_rand(100, 600));
+                $bid->setMarket($current->getId());
+                $date = new \DateTime('c');
+                $bid->setDate($date->setTimestamp($date->getTimestamp() - $i));
+                $manager->persist($bid);
 
-            $bid = new Bid();
-            $bid->setIdUser($user2->getId());
-            $bid->setValue(mt_rand(10, 100));
-            $bid->setVolume(mt_rand(100, 600));
-            $bid->setAsset($asset->getId());
-            $date = new \DateTime('c');
-            $bid->setDate($date->setTimestamp($date->getTimestamp()-$i));
-            $manager->persist($bid);
+                $bid = new Bid();
+                $bid->setIdUser($user2->getId());
+                $bid->setValue(mt_rand(10, 100));
+                $bid->setVolume(mt_rand(100, 600));
+                $bid->setMarket($current->getId());
+                $date = new \DateTime('c');
+                $bid->setDate($date->setTimestamp($date->getTimestamp() - $i));
+                $manager->persist($bid);
 
-            $bid = new Bid();
-            $bid->setIdUser($user3->getId());
-            $bid->setValue(mt_rand(10, 100));
-            $bid->setVolume(mt_rand(100, 600));
-            $bid->setAsset($asset->getId());
-            $date = new \DateTime('c');
-            $bid->setDate($date->setTimestamp($date->getTimestamp()-$i));
-            $manager->persist($bid);
+                $bid = new Bid();
+                $bid->setIdUser($user3->getId());
+                $bid->setValue(mt_rand(10, 100));
+                $bid->setVolume(mt_rand(100, 600));
+                $bid->setMarket($current->getId());
+                $date = new \DateTime('c');
+                $bid->setDate($date->setTimestamp($date->getTimestamp() - $i));
+                $manager->persist($bid);
+            }
+
+            for ($i = 0; $i < 20; $i++) {
+                $ask = new Ask();
+                $ask->setIdUser($user1->getId());
+                $ask->setValue(mt_rand(100, 400));
+                $ask->setVolume(mt_rand(600, 1200));
+                $ask->setMarket($current->getId());
+                $date = new \DateTime('c');
+                $ask->setDate($date->setTimestamp($date->getTimestamp() - $i));
+                $manager->persist($ask);
+
+                $ask = new Ask();
+                $ask->setIdUser($user2->getId());
+                $ask->setValue(mt_rand(100, 400));
+                $ask->setVolume(mt_rand(600, 1200));
+                $ask->setMarket($current->getId());
+                $date = new \DateTime('c');
+                $ask->setDate($date->setTimestamp($date->getTimestamp() - $i));
+                $manager->persist($ask);
+
+                $ask = new Ask();
+                $ask->setIdUser($user3->getId());
+                $ask->setValue(mt_rand(100, 400));
+                $ask->setVolume(mt_rand(600, 1200));
+                $ask->setMarket($current->getId());
+                $date = new \DateTime('c');
+                $ask->setDate($date->setTimestamp($date->getTimestamp() - $i));
+                $manager->persist($ask);
+            }
         }
 
-        for($i =0; $i< 20;$i++)
+        $manager->flush();
+
+        $markets = $manager->getRepository(Market::class)->findAll();
+        foreach($markets as $market)
         {
-            $ask = new Ask();
-            $ask->setIdUser($user1->getId());
-            $ask->setValue(mt_rand(10, 100));
-            $ask->setVolume(mt_rand(600, 1200));
-            $ask->setAsset($asset->getId());
-            $date = new \DateTime('c');
-            $ask->setDate($date->setTimestamp($date->getTimestamp()-$i));
-            $manager->persist($ask);
+            $bid = $manager->getRepository(Bid::class)->findHighByForAsset($market->getId());
+            $market->setLastBid($bid->getValue());
 
-            $ask = new Ask();
-            $ask->setIdUser($user2->getId());
-            $ask->setValue(mt_rand(10, 100));
-            $ask->setVolume(mt_rand(600, 1200));
-            $ask->setAsset($asset->getId());
-            $date = new \DateTime('c');
-            $ask->setDate($date->setTimestamp($date->getTimestamp()-$i));
-            $manager->persist($ask);
+            $ask = $manager->getRepository(Ask::class)->findLowByForAsset($market->getId());
+            $market->setLastAsk($ask->getValue());
 
-            $ask = new Ask();
-            $ask->setIdUser($user3->getId());
-            $ask->setValue(mt_rand(10, 100));
-            $ask->setVolume(mt_rand(600, 1200));
-            $ask->setAsset($asset->getId());
-            $date = new \DateTime('c');
-            $ask->setDate($date->setTimestamp($date->getTimestamp()-$i));
-            $manager->persist($ask);
+            $manager->persist($market);
+
         }
 
         $manager->flush();

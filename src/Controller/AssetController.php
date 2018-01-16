@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Asset;
+use App\Entity\Market;
 
 class AssetController extends Controller
 {
@@ -21,10 +22,15 @@ class AssetController extends Controller
 
         $assets = $this->getDoctrine()
             ->getRepository(Asset::class)
+            ->findAllWithoutBTC();
+
+        $market =  $this->getDoctrine()
+            ->getRepository(Market::class)
             ->findAll();
 
         return $this->render('asset/index.html.twig', array(
             'assets' => $assets,
+            'markets' => $market,
         ));
     }
 
