@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Entity\Asset;
+use App\Entity\AssetsJS;
 use App\Entity\Market;
 
 class AssetController extends Controller
@@ -28,10 +29,53 @@ class AssetController extends Controller
             ->getRepository(Market::class)
             ->findAll();
 
-        return $this->render('asset/index.html.twig', array(
-            'assets' => $assets,
-            'markets' => $market,
-        ));
+        return $this->render('asset/index.html.twig');
+    }
+
+
+    /**
+     * @Route("/assetJS", name="assetJS")
+     */
+    public function indexJs()
+    {
+
+        $assets = $this->getDoctrine()
+            ->getRepository(Asset::class)
+            ->findAllWithoutBTC();
+
+        $markets =  $this->getDoctrine()
+            ->getRepository(Market::class)
+            ->findAll();
+
+
+        $assetsJS = Array();
+
+        foreach($assets as $asset)
+        {
+            $assetJS = Array();
+            array_push($assetJS,$asset->getName() . " (" . $asset->GetMnemonic() .")");
+            foreach($markets as $market)
+            {
+                if($market->getIdAsset() == $asset->getId())
+                {
+                    array_push($assetJS,"<a href=\""
+                        . $this->generateUrl('marketview',array('market'=>$market->getName()))
+                        . "\">"
+                        . $market->GetName()
+                        . "</a></td>"
+                    );
+                    array_push($assetJS,$market->getLastPrice());
+                    array_push($assetJS,$market->getVolume());
+                    array_push($assetJS,number_format($market->getLastBid(),8));
+
+                    array_push($assetJS,number_format($market->getLastAsk(),8));
+                    array_push($assetJS,$market->getPercentChange());
+                }
+            }
+            array_push($assetsJS,$assetJS);
+        }
+
+        return $this->json($assetsJS);
     }
 
 

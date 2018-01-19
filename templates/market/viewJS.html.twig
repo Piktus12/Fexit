@@ -4,8 +4,8 @@
 {% block title %}FeXiT{% endblock %}
 
 {% block body %}
-    <input type="hidden" id="market" value="{{ market.name }}" />
     <section id="graph">
+
         <div id="chartContainer" style="height: 300px; width: 100%;">
     </section>
     <section >
@@ -21,16 +21,15 @@
             </thead>
             <tbody>
 
-            {#
-                   {% for bid in bids %}
-                       <tr>
-                           <td>{{ bid.sum |number_format(5, '.', ',') }}</td>
-                           <td>{{ bid.btcVal |number_format(5, '.', ',') }}</td>
-                           <td>{{ bid.size |number_format(8, '.', ',') }}</td>
-                           <td>{{ bid.value |number_format(8, '.', ',') }}</td>
-                       </tr>
-                   {% endfor %}
-                   #}
+
+        {% for bid in bids %}
+            <tr>
+                <td>{{ bid.sum |number_format(5, '.', ',') }}</td>
+                <td>{{ bid.btcVal |number_format(5, '.', ',') }}</td>
+                <td>{{ bid.size |number_format(8, '.', ',') }}</td>
+                <td>{{ bid.value |number_format(8, '.', ',') }}</td>
+            </tr>
+        {% endfor %}
         </table>
     </section>
     <section >
@@ -39,15 +38,15 @@
             <thead>
             <tr>
                 <th>Value</th>
-                <th>Size ({{ coin.name }})</th>
                 <th>Volume</th>
+                <th>Size ({{ coin.name }})</th>
                 <th>Sum</th>
             </tr>
             </thead>
             <tbody>
 
 
-        {#    {% for ask in asks %}
+            {% for ask in asks %}
                 <tr>
                     <td>{{ ask.value |number_format(8, '.', ',') }}</td>
                     <td>{{ ask.size |number_format(8, '.', ',') }}</td>
@@ -55,14 +54,7 @@
                     <td>{{ ask.sum |number_format(5, '.', ',') }}</td>
                 </tr>
             {% endfor %}
-            #}
         </table>
     </section>
 
-
-
 {% endblock %}
-{% block javascripts %}
-<script src="{{ asset('build/market.js') }}"></script>
-
-{%  endblock %}

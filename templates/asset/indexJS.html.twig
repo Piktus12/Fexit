@@ -1,0 +1,16 @@
+  {% set data = "[" %}
+  {% for asset in assets %}
+       {% set  col = asset.name ~ "(" ~ asset.mnemonic ~ ")," %}
+       {% for market in markets %}
+            {% if asset.id  == market.idAsset %}
+                {%  set col = col ~ "<a href=" ~ url('marketview',{ 'market': market.name}) ~ ">market.name </a>," %}
+                {%  set col = col ~ market.lastPrice ~ "," %}
+                {%  set col = col ~ market.volume ~ "," %}
+                {%  set col = col ~ market.lastBid |number_format(8, '.', ',') ~ "," %}
+                {%  set col = col ~ market.lastAsk |number_format(8, '.', ',') ~ "," %}
+                {%  set col = col ~ market.percentChange ~ ","  %}
+            {% endif %}
+       {% endfor %}
+      {% set data = data ~ "[" ~ col ~ "]" %}
+  {% endfor %}
+  {% set data = data ~ "]" %}

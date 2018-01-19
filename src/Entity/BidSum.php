@@ -7,7 +7,60 @@ class BidSum
 {
 
     private $value = 0;
-    private $volume = 0;
+    private $size = 0;
+    private $sum = 0;
+    private $btc_val = 0;
+
+    /**
+     * @return float
+     */
+    public function getSize(): float
+    {
+        return $this->size;
+    }
+
+    /**
+     * @param float $size
+     */
+    public function setSize(float $size)
+    {
+        $this->size = $size;
+    }
+
+    /**
+     * @return float
+     */
+    public function getSum(): float
+    {
+        return $this->sum;
+    }
+
+    /**
+     * @param float $sum
+     */
+    public function setSum(float $sum)
+    {
+        $this->sum = $sum;
+    }
+
+    /**
+     * @return float
+     */
+    public function getBtcVal(): float
+    {
+        return $this->btc_val;
+    }
+
+    /**
+     * @param float $btc_val
+     */
+    public function setBtcVal(float $btc_val)
+    {
+        $this->btc_val = $btc_val;
+    }
+
+
+
 
     /**
      * @return mixed
@@ -23,22 +76,6 @@ class BidSum
     public function setValue($value)
     {
         $this->value = $value;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getVolume()
-    {
-        return $this->volume;
-    }
-
-    /**
-     * @param mixed $volume
-     */
-    public function setVolume($volume)
-    {
-        $this->volume = $volume;
     }
 
 

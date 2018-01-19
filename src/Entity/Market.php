@@ -40,14 +40,14 @@ class Market
     private $volume = "";
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="float", scale=8)
      */
-    private $lastBid = "";
+    private $lastBid = 0.0;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="float", scale=8)
      */
-    private $lastAsk = "";
+    private $lastAsk = 0.0;
 
     /**
      * @ORM\Column(type="string")
@@ -117,6 +117,8 @@ class Market
     {
         $this->lastBid = $lastBid;
     }
+
+
 
     /**
      * @return mixed

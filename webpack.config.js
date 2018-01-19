@@ -10,6 +10,10 @@ Encore
     // will create public/build/app.js and public/build/app.css
     .addEntry('app', './assets/js/app.js')
 
+    .addEntry('assets', './assets/js/assets.js')
+
+    .addEntry('market', './assets/js/market.js')
+
     // allow sass/scss files to be processed
     .enableSassLoader(function(sassOptions) {}, {
                  resolveUrlLoader: false
@@ -27,6 +31,7 @@ Encore
 
     // show OS notifications when builds finish/fail
     .enableBuildNotifications()
+
 
 // create hashed filenames (e.g. app.abc123.css)
 // .enableVersioning()

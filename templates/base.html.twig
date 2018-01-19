@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Test Application{% endblock %}</title>
+    <title>{% block title %}FeXiT{% endblock %}</title>
     <link rel="stylesheet" href="{{ asset('build/app.css') }}">
 
 
@@ -38,12 +38,16 @@
     {% block body %}{% endblock %}
 </div>
 
+
+
+{% block javascripts %}
+    <script src="{{ asset('build/app.js') }}"></script>
+{% endblock %}
+
 <footer>
     {% block footer %}
 
     {% endblock %}
 </footer>
-<script src="{{ asset('build/app.js') }}"></script>
-
 </body>
 </html>

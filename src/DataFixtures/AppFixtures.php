@@ -221,7 +221,7 @@ class AppFixtures extends Fixture
             for ($i = 0; $i < 20; $i++) {
                 $bid = new Bid();
                 $bid->setIdUser($user1->getId());
-                $bid->setValue(mt_rand(10, 100));
+                $bid->setValue((mt_rand(10, 100))/100000000);
                 $bid->setVolume(mt_rand(100, 600));
                 $bid->setMarket($current->getId());
                 $date = new \DateTime('c');
@@ -230,7 +230,7 @@ class AppFixtures extends Fixture
 
                 $bid = new Bid();
                 $bid->setIdUser($user2->getId());
-                $bid->setValue(mt_rand(10, 100));
+                $bid->setValue((mt_rand(10, 100))/100000000);
                 $bid->setVolume(mt_rand(100, 600));
                 $bid->setMarket($current->getId());
                 $date = new \DateTime('c');
@@ -239,7 +239,7 @@ class AppFixtures extends Fixture
 
                 $bid = new Bid();
                 $bid->setIdUser($user3->getId());
-                $bid->setValue(mt_rand(10, 100));
+                $bid->setValue((mt_rand(10, 100))/100000000);
                 $bid->setVolume(mt_rand(100, 600));
                 $bid->setMarket($current->getId());
                 $date = new \DateTime('c');
@@ -250,7 +250,7 @@ class AppFixtures extends Fixture
             for ($i = 0; $i < 20; $i++) {
                 $ask = new Ask();
                 $ask->setIdUser($user1->getId());
-                $ask->setValue(mt_rand(100, 400));
+                $ask->setValue((mt_rand(100, 400))/100000000);
                 $ask->setVolume(mt_rand(600, 1200));
                 $ask->setMarket($current->getId());
                 $date = new \DateTime('c');
@@ -259,7 +259,7 @@ class AppFixtures extends Fixture
 
                 $ask = new Ask();
                 $ask->setIdUser($user2->getId());
-                $ask->setValue(mt_rand(100, 400));
+                $ask->setValue((mt_rand(100, 400))/100000000);
                 $ask->setVolume(mt_rand(600, 1200));
                 $ask->setMarket($current->getId());
                 $date = new \DateTime('c');
@@ -268,7 +268,7 @@ class AppFixtures extends Fixture
 
                 $ask = new Ask();
                 $ask->setIdUser($user3->getId());
-                $ask->setValue(mt_rand(100, 400));
+                $ask->setValue((mt_rand(100, 400))/100000000);
                 $ask->setVolume(mt_rand(600, 1200));
                 $ask->setMarket($current->getId());
                 $date = new \DateTime('c');
@@ -283,10 +283,10 @@ class AppFixtures extends Fixture
         foreach($markets as $market)
         {
             $bid = $manager->getRepository(Bid::class)->findHighByForAsset($market->getId());
-            $market->setLastBid($bid->getValue());
+            $market->setLastBid((double)$bid->getValue());
 
             $ask = $manager->getRepository(Ask::class)->findLowByForAsset($market->getId());
-            $market->setLastAsk($ask->getValue());
+            $market->setLastAsk((double)$ask->getValue());
 
             $manager->persist($market);
 

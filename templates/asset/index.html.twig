@@ -7,41 +7,45 @@
 
     <section>
 
-        <table id="coins" class="table table-sm">
-            <thead>
-            <tr>
-                <th>Coin Name</th>
-                <th>Market</th>
-                <th>Last Price</th>
-                <th>Volume</th>
-                <th>Bid</th>
-                <th>Ask</th>
-                <th>% change</th>
+        <table id="coins" class="display">
+             <thead>
+              <tr>
+                  <th>Coin Name</th>
+                  <th>Market</th>
+                  <th>Last Price</th>
+                  <th>Volume</th>
+                  <th>Bid</th>
+                  <th>Ask</th>
+                  <th>Change</th>
 
-            </tr>
-            </thead>
-            <tbody>
+              </tr>
+              </thead>
+              <tbody>
+              {#
         {% for asset in assets %}
-        <tr>
-            <td>{{ asset.name }} ({{ asset.mnemonic }})</td>
-            {% for market in markets %}
-            {% if asset.id  == market.idAsset %}
-                <td><a href="{{ url('marketview',{ 'market': market.name}) }}">{{ market.name }}</a></td>
-                <td>{{ market.lastPrice }}</a></td>
-                <td>{{ market.volume }}</a></td>
-                <td>{{ market.lastBid }}</a></td>
-                <td>{{ market.lastAsk }}</a></td>
-                <td>{{ market.percentChange }}</a></td>
-            {% endif %}
-            {% endfor %}
-            <td></td>
-        </tr>
+         <tr>
+             <td>{{ asset.name }} ({{ asset.mnemonic }})</td>
+             {% for market in markets %}
+             {% if asset.id  == market.idAsset %}
+                 <td><a href="{{ url('marketview',{ 'market': market.name}) }}">{{ market.name }}</a></td>
+                 <td>{{ market.lastPrice }}</td>
+                 <td>{{ market.volume }}</td>
+                 <td>{{ market.lastBid |number_format(8, '.', ',')}}</td>
+                 <td>{{ market.lastAsk |number_format(8, '.', ',')}}</td>
+                 <td>{{ market.percentChange }}</td>
+             {% endif %}
+             {% endfor %}
+
+         </tr>
 
 
-        {% endfor %}
+         {% endfor %}
+#}
             </tbody>
         </table>
     </section>
-
-
 {% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('build/assets.js') }}"></script>
+{%  endblock %}
